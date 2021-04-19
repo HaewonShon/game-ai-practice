@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IScene.h"
+#include "Shader.h"
 #include <unordered_map>
 #include <memory>
 
@@ -29,4 +30,7 @@ private:
 	std::unordered_map<int, std::unique_ptr<IScene>> scenes;
 	IScene* currentScene;
 	IScene* nextScene;
+
+	// graphics
+	Shader shader;
 };

@@ -1,6 +1,8 @@
 #include "../GraphicsEngine/Engine.h"
 #include "BasicScene.h"
 
+#include <iostream>
+
 enum class Scenes
 {
 	BASIC_SCENE,
@@ -14,15 +16,23 @@ enum class Scenes
 
 int main()
 {
-	Engine engine;
+	try {
+		Engine engine;
 
-	engine.Init();
+		engine.Init();
 
-	engine.RegisterScene<BasicScene>(ConvertSceneEnum(Scenes::BASIC_SCENE));
-	engine.SetNextScene(ConvertSceneEnum(Scenes::BASIC_SCENE));
+		engine.RegisterScene<BasicScene>(ConvertSceneEnum(Scenes::BASIC_SCENE));
+		engine.SetNextScene(ConvertSceneEnum(Scenes::BASIC_SCENE));
 
-	while (!engine.IsDone())
-	{
-		engine.Update();
+		while (!engine.IsDone())
+		{
+			engine.Update();
+		}
 	}
+	catch (std::exception& e)
+	{
+		std::cout << e.what() << std::endl;
+		return -1;
+	}
+	return 0;
 }

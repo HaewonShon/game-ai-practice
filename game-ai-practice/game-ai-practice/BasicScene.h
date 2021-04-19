@@ -2,6 +2,9 @@
 
 #include "../GraphicsEngine/IScene.h"
 
+// temp
+#include <gl/glew.h>
+
 class BasicScene : public IScene
 {
 public:
@@ -11,6 +14,5 @@ public:
 	void DrawGUI() override;
 
 private:
-
-
+	GLuint tempVAO, tempVBO;
 };
