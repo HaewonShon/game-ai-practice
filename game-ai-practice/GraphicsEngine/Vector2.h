@@ -23,6 +23,6 @@ struct [[nodiscard]]vec2
 	[[nodiscard]] constexpr bool operator!=(const vec2& rhs) noexcept;
 
 	[[nodiscard]] constexpr double GetLengthSquared() noexcept;
-	constexpr vec2 GetNormalized() noexcept;
-	constexpr vec2 GetRotated(double radians) noexcept;
+	vec2 GetNormalized() noexcept;
+	vec2 GetRotated(double radians) noexcept;
 };

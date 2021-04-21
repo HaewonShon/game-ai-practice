@@ -1,4 +1,6 @@
 #include "Vector2.h"
+#include <cmath>
+#include <stdexcept>
 
 constexpr vec2& vec2::operator+=(const vec2& rhs) noexcept
 {
@@ -71,11 +73,15 @@ constexpr double vec2::GetLengthSquared() noexcept
 	return x * x + y * y;
 }
 
-constexpr vec2 vec2::GetNormalized() noexcept
+vec2 vec2::GetNormalized() noexcept
 {
-
+	return vec2(*this) / std::sqrt(GetLengthSquared());
 }
 
-constexpr vec2 vec2::GetRotated(double radians) noexcept
+vec2 vec2::GetRotated(double radians) noexcept
 {
+	double cosVal{ std::cos(radians) };
+	double sinVal{ std::sin(radians) };
+
+	return vec2{cosVal * x - sinVal * y, sinVal * x + cosVal * y};
 }
