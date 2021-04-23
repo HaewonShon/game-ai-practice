@@ -3,7 +3,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
-struct [[nodiscard]]matrix3
+struct [[nodiscard]] matrix3
 {
 	double element[3][3];
 
@@ -34,3 +34,5 @@ namespace
 	constexpr matrix3 Scale(const vec2& s) noexcept;
 	matrix3 rotation(double radian) noexcept;
 }
+
+#include "Matrix3.inl"

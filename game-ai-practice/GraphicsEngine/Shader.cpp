@@ -5,7 +5,7 @@
 
 const char* vertexShader = {
 	"#version 450 core\n"
-	"layout(location = 0) in vec3 position;\n"
+	"layout(location = 0) in vec2 position;\n"
 	"uniform mat3 TRS;\n"
 	"uniform mat3 NDC;\n"
 	"void main()\n"

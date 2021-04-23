@@ -36,6 +36,15 @@
     <ClInclude Include="Matrix3.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix3.inl">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.inl">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.inl">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -43,15 +52,6 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Matrix3.cpp">
-      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Graphics</Filter>

@@ -1,4 +1,5 @@
-#include "Matrix3.h"
+#pragma once
+
 #include <cmath>
 #include <stdexcept>
 

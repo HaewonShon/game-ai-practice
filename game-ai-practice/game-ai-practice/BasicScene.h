@@ -1,9 +1,7 @@
 #pragma once
 
 #include "../GraphicsEngine/IScene.h"
-
-// temp
-#include <gl/glew.h>
+#include "../GraphicsEngine/Mesh.h"
 
 class BasicScene : public IScene
 {
@@ -14,5 +12,5 @@ public:
 	void DrawGUI() override;
 
 private:
-	GLuint tempVAO, tempVBO;
+	Mesh triangle;
 };

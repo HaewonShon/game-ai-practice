@@ -29,3 +29,5 @@ struct [[nodiscard]] vec3
 	[[nodiscard]] constexpr double GetLengthSquared() noexcept;
 	vec3 GetNormalized() noexcept;
 };
+
+#include "Vector3.inl"

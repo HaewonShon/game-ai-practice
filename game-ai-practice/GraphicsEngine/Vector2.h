@@ -1,6 +1,6 @@
 #pragma once
 
-struct [[nodiscard]]vec2
+struct [[nodiscard]] vec2
 {
 	double x{.0};
 	double y{.0};
@@ -26,3 +26,5 @@ struct [[nodiscard]]vec2
 	vec2 GetNormalized() noexcept;
 	vec2 GetRotated(double radians) noexcept;
 };
+
+#include "Vector2.inl"

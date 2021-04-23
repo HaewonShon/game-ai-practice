@@ -1,4 +1,5 @@
-#include "Vector3.h"
+#pragma once
+
 #include <cmath>
 
 constexpr vec3& vec3::operator+=(const vec3& rhs) noexcept

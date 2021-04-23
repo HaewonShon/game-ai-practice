@@ -1,36 +1,26 @@
 #include "BasicScene.h"
-#include <array>
 
 void BasicScene::Init()
 {
-	GLfloat VERTICES[9] = { 
-		-0.5F, -0.5F, 0.0F,
-		0.5F, -0.5F, 0.0F,
-		0.0F, 0.5F, 0.0F
-	};
+	triangle.AddVertex({ 0.0, 0.5 });
+	triangle.AddVertex({ -0.5, -0.5 });
+	triangle.AddVertex({ 0.5, -0.5 });
 
-	glGenVertexArrays(1, &tempVAO);
-	glGenBuffers(1, &tempVBO);
+	triangle.SetColor({ 0.5, 0.5, 1.0 });
 
-	glBindVertexArray(tempVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, tempVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(VERTICES), &VERTICES[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindVertexArray(0);
+	triangle.Init();
 }
 
-void BasicScene::Update([[maybe_unused]]double dt)
-{}
+void BasicScene::Update([[maybe_unused]] double dt)
+{
+
+}
 
 void BasicScene::DrawObjects()
 {
-	glBindVertexArray(tempVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glBindVertexArray(0);
+	triangle.Draw();
 }
 
 void BasicScene::DrawGUI()
-{}
+{
+}
