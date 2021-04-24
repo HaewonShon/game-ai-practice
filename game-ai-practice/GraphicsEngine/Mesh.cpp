@@ -71,3 +71,15 @@ void Mesh::AddRotation(double radian) noexcept
 {
 	rotation += radian;
 }
+
+mat3& Mesh::GetTRS() noexcept
+{
+	return TRS;
+}
+
+void Mesh::UpdateMatrix() noexcept
+{
+	TRS = matrix3::Scale(scale)
+		* matrix3::Rotate(rotation)
+		* matrix3::Translate(translation);
+}

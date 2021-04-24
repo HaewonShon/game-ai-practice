@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Vector2.h"
-#include "Vector3.h"
+#include "Matrix3.h"
 #include <vector>
 
 #include <gl/glew.h>
@@ -25,13 +24,18 @@ public:
 	void AddTranslation(const vec2& v) noexcept;
 	void AddRotation(double radian) noexcept;
 
+	mat3& GetTRS() noexcept;
 private:
+	void UpdateMatrix() noexcept;
+
 	std::vector<vec2> vertices;
 	vec3 color{};
 
 	vec2 translation{};
 	vec2 scale{};
 	double rotation{};
+
+	mat3 TRS{};
 
 	GLuint vao{};
 	GLuint vbo{};

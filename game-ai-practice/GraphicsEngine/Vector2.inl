@@ -84,5 +84,5 @@ vec2 vec2::GetRotated(double radians) noexcept
 	double cosVal{ std::cos(radians) };
 	double sinVal{ std::sin(radians) };
 
-	return vec2{cosVal * x - sinVal * y, sinVal * x + cosVal * y};
+	return vec2{ cosVal * x - sinVal * y, sinVal * x + cosVal * y };
 }

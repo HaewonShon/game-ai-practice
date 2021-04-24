@@ -3,14 +3,14 @@
 #include <cmath>
 #include <stdexcept>
 
-constexpr matrix3::matrix3(double val) : matrix3()
+constexpr mat3::mat3(double val) : mat3()
 {
-	element[0][0] = 0.0;
-	element[1][1] = 0.0;
-	element[2][2] = 0.0;
+	element[0][0] = val;
+	element[1][1] = val;
+	element[2][2] = val;
 }
 
-constexpr matrix3::matrix3(const vec3& col1, const vec3& col2, const vec3& col3) : matrix3()
+constexpr mat3::mat3(const vec3& col1, const vec3& col2, const vec3& col3) : mat3()
 {
 	element[0][0] = col1.x;
 	element[0][1] = col1.y;
@@ -25,7 +25,7 @@ constexpr matrix3::matrix3(const vec3& col1, const vec3& col2, const vec3& col3)
 	element[2][2] = col3.z;
 }
 
-constexpr double& matrix3::operator()(int column, int row)
+constexpr double& mat3::operator()(int column, int row)
 {
 	if ((column < 0 || column >= 3) || (row < 0 || column >= 3))
 	{
@@ -37,7 +37,7 @@ constexpr double& matrix3::operator()(int column, int row)
 	}
 }
 
-constexpr double matrix3::operator()(int column, int row) const
+constexpr double mat3::operator()(int column, int row) const
 {
 	if ((column < 0 || column >= 3) || (row < 0 || column >= 3))
 	{
@@ -50,7 +50,7 @@ constexpr double matrix3::operator()(int column, int row) const
 }
 
 
-constexpr matrix3& matrix3::operator+=(const matrix3& rhs) noexcept
+constexpr mat3& mat3::operator+=(const mat3& rhs) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -62,7 +62,7 @@ constexpr matrix3& matrix3::operator+=(const matrix3& rhs) noexcept
 	return *this;
 }
 
-constexpr matrix3& matrix3::operator-=(const matrix3& rhs) noexcept
+constexpr mat3& mat3::operator-=(const mat3& rhs) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -74,7 +74,7 @@ constexpr matrix3& matrix3::operator-=(const matrix3& rhs) noexcept
 	return *this;
 }
 
-constexpr matrix3& matrix3::operator*=(double val) noexcept
+constexpr mat3& mat3::operator*=(double val) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -86,7 +86,7 @@ constexpr matrix3& matrix3::operator*=(double val) noexcept
 	return *this;
 }
 
-constexpr matrix3& matrix3::operator/=(double val) noexcept
+constexpr mat3& mat3::operator/=(double val) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -98,35 +98,35 @@ constexpr matrix3& matrix3::operator/=(double val) noexcept
 	return *this;
 }
 
-constexpr matrix3 matrix3::operator+(const matrix3& rhs) noexcept
+constexpr mat3 mat3::operator+(const mat3& rhs) noexcept
 {
-	matrix3 m(*this);
+	mat3 m(*this);
 	m += rhs;
 	return m;
 }
 
-constexpr matrix3 matrix3::operator-(const matrix3& rhs) noexcept
+constexpr mat3 mat3::operator-(const mat3& rhs) noexcept
 {
-	matrix3 m(*this);
+	mat3 m(*this);
 	m -= rhs;
 	return m;
 }
 
-constexpr matrix3 matrix3::operator*(double val) noexcept
+constexpr mat3 mat3::operator*(double val) noexcept
 {
-	matrix3 m(*this);
+	mat3 m(*this);
 	m *= val;
 	return m;
 }
 
-constexpr matrix3 matrix3::operator/(double val) noexcept
+constexpr mat3 mat3::operator/(double val) noexcept
 {
-	matrix3 m(*this);
+	mat3 m(*this);
 	m /= val;
 	return m;
 }
 
-constexpr bool matrix3::operator==(const matrix3& rhs) noexcept
+constexpr bool mat3::operator==(const mat3& rhs) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -141,32 +141,57 @@ constexpr bool matrix3::operator==(const matrix3& rhs) noexcept
 	return true;
 }
 
-constexpr bool matrix3::operator!=(const matrix3& rhs) noexcept
+constexpr bool mat3::operator!=(const mat3& rhs) noexcept
 {
 	return (*this == rhs);
 }
 
-namespace
+constexpr mat3& mat3::operator*=(const mat3& rhs) noexcept
 {
-	constexpr matrix3 Translation(const vec2& t) noexcept
+	mat3 mul{1.0};
+	for (int i = 0; i < 3; i++)
 	{
-		matrix3 m(1.f);
+		for (int j = 0; j < 3; j++)
+		{
+			mul(i, j) = 0;
+			for (int k = 0; k < 3; k++)
+			{
+				mul(i, j) += (*this)(i, k) * rhs(k, j);
+			}
+		}
+	}
+	*this = mul;
+	return *this;
+}
+
+constexpr mat3 mat3::operator*(const mat3& rhs) noexcept
+{
+	mat3 m(*this);
+	m *= rhs;
+	return m;
+}
+
+namespace matrix3
+{
+	constexpr mat3 Translate(const vec2& t) noexcept
+	{
+		mat3 m(1.f);
 		m(2, 0) = t.x;
 		m(2, 1) = t.y;
 		return m;
 	}
-	constexpr matrix3 Scale(const vec2& s) noexcept
+	constexpr mat3 Scale(const vec2& s) noexcept
 	{
-		matrix3 m(1.f);
+		mat3 m(1.f);
 		m(0, 0) = s.x;
 		m(1, 1) = s.y;
 		return m;
 	}
-	matrix3 rotation(double radian) noexcept
+	mat3 Rotate(double radian) noexcept
 	{
 		double cosVal = std::cos(radian);
 		double sinVal = std::sin(radian);
-		matrix3 m(1.f);
+		mat3 m(1.f);
 		m(0, 0) = cosVal;
 		m(1, 1) = cosVal;
 		m(1, 0) = -sinVal;
