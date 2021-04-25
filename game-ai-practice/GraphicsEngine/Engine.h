@@ -17,6 +17,8 @@ public:
 	template <typename Scene>
 	void RegisterScene(int index) { scenes[index] = std::make_unique<Scene>(); }
 	void SetNextScene(int index) { nextScene = scenes[index].get(); }
+
+	static Shader& GetShader() { return shader; }
 private:
 	SDL_Window* window{ nullptr };
 	void* glContext{ nullptr };
@@ -32,5 +34,5 @@ private:
 	IScene* nextScene;
 
 	// graphics
-	Shader shader;
+	static Shader shader;
 };

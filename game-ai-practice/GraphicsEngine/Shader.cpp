@@ -6,22 +6,29 @@
 const char* vertexShader = {
 	"#version 450 core\n"
 	"layout(location = 0) in vec2 position;\n"
-	"uniform mat3 TRS;\n"
-	"uniform mat3 NDC;\n"
+
+	//"uniform mat3 TRS;\n"
+	//"uniform mat3 NDC;\n"
+	"uniform vec3 color;\n"
+
+	"out vec3 in_color;\n"
+
 	"void main()\n"
 	"{\n"
-	//"	gl_Position = vec4(NDC * TRS * position, 1.0);\n"
-	"	gl_Position = vec4(position, 0.0, 1.0);\n"
+	"	in_color = color;\n"
+	"	vec3 pos = vec3(position, 1.0);\n"
+	"	gl_Position = vec4(pos.xy, 0.0, 1.0);\n"
+	//"	gl_Position = vec4(position, 0.0, 1.0);\n"
 	"}\n"
 };
 
 const char* fragmentShader = {
 	"#version 450 core\n"
-	"uniform vec3 color;\n"
+	"in vec3 in_color;\n"
 	"void main()\n"
 	"{\n"
-	//"	gl_FragColor = vec4(color, 1.0);\n"
-	"	gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);\n"
+	//"	gl_FragColor = vec4(in_color, 1.0);\n"
+	"	gl_FragColor = vec4(in_color.x, 1.0, 0.0, 1.0);\n"
 	"}\n"
 };
 
@@ -73,21 +80,63 @@ void Shader::Init()
 	glAttachShader(shaderID, fShader);
 	glLinkProgram(shaderID);
 	glValidateProgram(shaderID);
+
+	glGetProgramiv(shaderID, GL_LINK_STATUS, &compileResult);
+	if (compileResult == GL_FALSE)
+	{
+		GLint logLength;
+		glGetProgramiv(shaderID, GL_INFO_LOG_LENGTH, &logLength);
+		std::vector<char> logError(logLength);
+		glGetProgramInfoLog(shaderID, logLength, &logLength, &logError[0]);
+		glDeleteShader(vShader);
+		glDeleteShader(fShader);
+		glDeleteProgram(shaderID);
+		throw std::runtime_error(logError.data());
+	}
+
 	glDeleteShader(vShader);
 	glDeleteShader(fShader);
+
+	if (GLint e = glGetError(); e != GL_NO_ERROR)
+	{
+		e++;
+	}
 }
 
-void Shader::Bind()
+void Shader::Bind() noexcept
 {
 	glUseProgram(shaderID);
 }
 
-void Shader::Unbind()
+void Shader::Unbind() noexcept
 {
 	glUseProgram(0);
 }
 
+void Shader::SetUniformDouble(const GLchar* variableName, double value) noexcept
+{
+	glUniform1d(GetUniformLocation(variableName), value);
+}
+
+void Shader::SetUniformInt(const GLchar* variableName, int value) noexcept
+{
+	glUniform1i(GetUniformLocation(variableName), value);
+}
+
+void Shader::SetUniformVec3(const GLchar* variableName, const vec3& value) noexcept
+{
+	glUniform3dv(GetUniformLocation(variableName), 1, &value.x);
+}
+
+void Shader::SetUniformMat3(const GLchar* variableName, const mat3& value) noexcept
+{
+	glUniformMatrix3dv(GetUniformLocation(variableName), 1, GL_FALSE,
+		value.element[0]);
+		
+}
+
 GLint Shader::GetUniformLocation(const GLchar* variableName)
 {
-	return glGetUniformLocation(shaderID, variableName);
+	GLint location = glGetUniformLocation(shaderID, variableName);
+	return location;
 }

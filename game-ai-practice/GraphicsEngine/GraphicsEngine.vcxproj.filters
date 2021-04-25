@@ -45,6 +45,9 @@
     <ClInclude Include="Vector3.inl">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">

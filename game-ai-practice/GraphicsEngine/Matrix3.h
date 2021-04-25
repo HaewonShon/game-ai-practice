@@ -28,6 +28,8 @@ struct [[nodiscard]] mat3
 	 
 	inline [[nodiscard]] constexpr bool operator==(const mat3& rhs) noexcept;
 	inline [[nodiscard]] constexpr bool operator!=(const mat3& rhs) noexcept;
+
+	inline double* GetElementPtr() { return &element[0][0]; }
 };
 
 namespace matrix3

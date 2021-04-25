@@ -1,4 +1,6 @@
 #include "Mesh.h"
+#include "constants.h" // PI
+#include "Engine.h" // GetShader
 
 Mesh::~Mesh() noexcept
 {
@@ -23,8 +25,14 @@ void Mesh::Init() noexcept
 
 void Mesh::Draw() noexcept
 {
+	Shader& shader = Engine::GetShader();
+
 	glBindVertexArray(vao);
+
+	//shader.SetUniformMat3("TRS", TRS);
+	shader.SetUniformVec3("color", color);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
 	glBindVertexArray(0);
 }
 
@@ -46,30 +54,51 @@ void Mesh::SetColor(const vec3& c) noexcept
 {
 	color = c;
 }
+
+void Mesh::SetMode(Mesh::Mode m) noexcept
+{
+	switch (m)
+	{
+	case Mode::TRIANGLES:
+		mode = GL_TRIANGLES;
+		break;
+	case Mode::TRIANGLE_FAN:
+		mode = GL_TRIANGLE_FAN;
+		break;
+	case Mode::TRIANGLE_STRIP:
+		mode = GL_TRIANGLE_STRIP;
+		break;
+	}
+}
 	 
 void Mesh::SetTranslation(const vec2& v) noexcept
 {
 	translation = v;
+	UpdateMatrix();
 }
 
 void Mesh::SetScale(const vec2& v) noexcept
 {
 	scale = v;
+	UpdateMatrix();
 }
 
 void Mesh::SetRotation(double radian) noexcept
 {
 	rotation = radian;
+	UpdateMatrix();
 }
 
 void Mesh::AddTranslation(const vec2& v) noexcept
 {
 	translation += v;
+	UpdateMatrix();
 }
 
 void Mesh::AddRotation(double radian) noexcept
 {
 	rotation += radian;
+	UpdateMatrix();
 }
 
 mat3& Mesh::GetTRS() noexcept
@@ -82,4 +111,44 @@ void Mesh::UpdateMatrix() noexcept
 	TRS = matrix3::Scale(scale)
 		* matrix3::Rotate(rotation)
 		* matrix3::Translate(translation);
+}
+
+namespace mesh
+{
+	Mesh CreateTriangle(const vec3& color) noexcept
+	{
+		Mesh triangle;
+		triangle.AddVertex({ 0.0, 0.5 });
+		triangle.AddVertex({ -0.5, -0.5 });
+		triangle.AddVertex({ 0.5, -0.5 });
+		triangle.SetColor({ 0.5, 0.5, 1.0 });
+		triangle.SetColor(color);
+		triangle.SetMode(Mesh::Mode::TRIANGLES);
+		return triangle;
+	}
+
+	Mesh CreateCircle(const vec3& color) noexcept
+	{
+		Mesh circle;
+		circle.AddVertex({ 0.0, 0.0 });
+		double angle_gap = 2.0 * PI / 32.0;
+		for (int i = 0; i <= 32; ++i)
+		{
+			circle.AddVertex(vec2{std::cos(angle_gap * i), std::sin(angle_gap * i)} * 0.5);
+		}
+		circle.SetColor(color);
+		circle.SetMode(Mesh::Mode::TRIANGLE_STRIP);
+		return circle;
+	}
+	Mesh CreateSquare(const vec3& color) noexcept
+	{
+		Mesh square;
+		square.AddVertex({-0.5, 0.5});
+		square.AddVertex({ 0.5, 0.5 });
+		square.AddVertex({ -0.5, -0.5 });
+		square.AddVertex({ 0.5, -0.5 });
+		square.SetColor(color);
+		square.SetMode(Mesh::Mode::TRIANGLE_STRIP);
+		return square;
+	}
 }

@@ -7,6 +7,9 @@
 #include <imgui_impl_sdl.h>
 
 #include "Engine.h"
+#include "Matrix3.h"
+
+Shader Engine::shader;
 
 void Engine::Init()
 {
@@ -51,6 +54,7 @@ void Engine::Init()
     glDepthFunc(GL_LESS);
 
     shader.Init();
+    shader.Bind();
 }
 
 void Engine::Update()
@@ -101,11 +105,14 @@ void Engine::Update()
     glClearColor(0.5F, 0.99F, 1.0F, 1.0F);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    shader.Bind();
+
+    // NDC
+    mat3 NDC = matrix3::Scale({2. / windowWidth, 2. / windowHeight});
+    //shader.SetUniformMat3("NDC", NDC);
+
     currentScene->Update(0.0);
     currentScene->DrawObjects();
     currentScene->DrawGUI();
-    shader.Unbind();
     
     SDL_GL_SwapWindow(window);
 }

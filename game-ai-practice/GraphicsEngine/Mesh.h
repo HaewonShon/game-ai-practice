@@ -8,6 +8,11 @@
 class Mesh
 {
 public:
+	enum class Mode
+	{
+		TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN,
+	};
+
 	~Mesh() noexcept;
 
 	void Init() noexcept;
@@ -16,6 +21,7 @@ public:
 
 	void AddVertex(const vec2& v) noexcept;
 	void SetColor(const vec3& c) noexcept;
+	void SetMode(Mesh::Mode m) noexcept;
 	
 	void SetTranslation(const vec2& v) noexcept;
 	void SetScale(const vec2& v) noexcept;
@@ -30,13 +36,21 @@ private:
 
 	std::vector<vec2> vertices;
 	vec3 color{};
+	GLuint mode;
 
-	vec2 translation{};
-	vec2 scale{};
-	double rotation{};
+	vec2 translation{0.0};
+	vec2 scale{1.0};
+	double rotation{0.0};
 
-	mat3 TRS{};
+	mat3 TRS{1.0};
 
 	GLuint vao{};
 	GLuint vbo{};
 };
+
+namespace mesh
+{
+	Mesh CreateTriangle(const vec3& color) noexcept;
+	Mesh CreateCircle(const vec3& color) noexcept;
+	Mesh CreateSquare(const vec3& color) noexcept;
+}
