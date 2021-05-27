@@ -27,8 +27,8 @@ const char* fragmentShader = {
 	"in vec3 in_color;\n"
 	"void main()\n"
 	"{\n"
-	//"	gl_FragColor = vec4(in_color, 1.0);\n"
-	"	gl_FragColor = vec4(in_color.x, 1.0, 0.0, 1.0);\n"
+	"	gl_FragColor = vec4(in_color, 1.0);\n"
+	//"	gl_FragColor = vec4(in_color.x, 1.0, 0.0, 1.0);\n"
 	"}\n"
 };
 
@@ -125,7 +125,12 @@ void Shader::SetUniformInt(const GLchar* variableName, int value) noexcept
 
 void Shader::SetUniformVec3(const GLchar* variableName, const vec3& value) noexcept
 {
-	glUniform3dv(GetUniformLocation(variableName), 1, &value.x);
+	glUniform3d(GetUniformLocation(variableName), value.x, value.y, value.z);
+}
+
+void Shader::SetUniformColor(const GLchar* variableName, const Color& value) noexcept
+{
+	glUniform3f(GetUniformLocation(variableName), value.r, value.g, value.b);
 }
 
 void Shader::SetUniformMat3(const GLchar* variableName, const mat3& value) noexcept

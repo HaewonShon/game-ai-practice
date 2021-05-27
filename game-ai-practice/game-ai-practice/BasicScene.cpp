@@ -2,11 +2,11 @@
 
 void BasicScene::Init()
 {
-	triangle = mesh::CreateTriangle({0.5, 0.5, 1.0});
+	triangle = mesh::CreateSquare({1.f});
 	triangle.Init();
 
 	triangle.SetScale({2., 2.});
-	triangle.SetColor({1., 1., 0.});
+	triangle.SetColor(1.f, 1.f, 0.f);
 }
 
 void BasicScene::Update([[maybe_unused]] double dt)

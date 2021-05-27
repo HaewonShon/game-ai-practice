@@ -30,7 +30,7 @@ void Mesh::Draw() noexcept
 	glBindVertexArray(vao);
 
 	//shader.SetUniformMat3("TRS", TRS);
-	shader.SetUniformVec3("color", color);
+	shader.SetUniformColor("color", color);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
 	glBindVertexArray(0);
@@ -39,7 +39,6 @@ void Mesh::Draw() noexcept
 void Mesh::Clear() noexcept
 {
 	vertices.clear();
-	color = vec3{ 0.0 };
 
 	glDeleteBuffers(1, &vbo);
 	glDeleteVertexArrays(1, &vao);
@@ -50,7 +49,14 @@ void Mesh::AddVertex(const vec2& v) noexcept
 	vertices.push_back(v);
 }
 
-void Mesh::SetColor(const vec3& c) noexcept
+void Mesh::SetColor(float r, float g, float b) noexcept
+{
+	color.r = r;
+	color.g = g;
+	color.b = b;
+}
+
+void Mesh::SetColor(const Color& c) noexcept
 {
 	color = c;
 }
@@ -115,19 +121,18 @@ void Mesh::UpdateMatrix() noexcept
 
 namespace mesh
 {
-	Mesh CreateTriangle(const vec3& color) noexcept
+	Mesh CreateTriangle(const Color& color) noexcept
 	{
 		Mesh triangle;
 		triangle.AddVertex({ 0.0, 0.5 });
 		triangle.AddVertex({ -0.5, -0.5 });
 		triangle.AddVertex({ 0.5, -0.5 });
-		triangle.SetColor({ 0.5, 0.5, 1.0 });
 		triangle.SetColor(color);
 		triangle.SetMode(Mesh::Mode::TRIANGLES);
 		return triangle;
 	}
 
-	Mesh CreateCircle(const vec3& color) noexcept
+	Mesh CreateCircle(const Color& color) noexcept
 	{
 		Mesh circle;
 		circle.AddVertex({ 0.0, 0.0 });
@@ -140,10 +145,12 @@ namespace mesh
 		circle.SetMode(Mesh::Mode::TRIANGLE_STRIP);
 		return circle;
 	}
-	Mesh CreateSquare(const vec3& color) noexcept
+	Mesh CreateSquare(const Color& color) noexcept
 	{
 		Mesh square;
 		square.AddVertex({-0.5, 0.5});
+		square.AddVertex({ 0.5, 0.5 });
+		square.AddVertex({ -0.5, -0.5 });
 		square.AddVertex({ 0.5, 0.5 });
 		square.AddVertex({ -0.5, -0.5 });
 		square.AddVertex({ 0.5, -0.5 });
