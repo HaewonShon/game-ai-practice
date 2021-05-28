@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdexcept>
 
-constexpr mat3::mat3(double val) : mat3()
+constexpr mat3::mat3(float val) : mat3()
 {
 	element[0][0] = val;
 	element[1][1] = val;
@@ -25,7 +25,7 @@ constexpr mat3::mat3(const vec3& col1, const vec3& col2, const vec3& col3) : mat
 	element[2][2] = col3.z;
 }
 
-constexpr double& mat3::operator()(int column, int row)
+constexpr float& mat3::operator()(int column, int row)
 {
 	if ((column < 0 || column >= 3) || (row < 0 || column >= 3))
 	{
@@ -37,7 +37,7 @@ constexpr double& mat3::operator()(int column, int row)
 	}
 }
 
-constexpr double mat3::operator()(int column, int row) const
+constexpr float mat3::operator()(int column, int row) const
 {
 	if ((column < 0 || column >= 3) || (row < 0 || column >= 3))
 	{
@@ -74,7 +74,7 @@ constexpr mat3& mat3::operator-=(const mat3& rhs) noexcept
 	return *this;
 }
 
-constexpr mat3& mat3::operator*=(double val) noexcept
+constexpr mat3& mat3::operator*=(float val) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -86,7 +86,7 @@ constexpr mat3& mat3::operator*=(double val) noexcept
 	return *this;
 }
 
-constexpr mat3& mat3::operator/=(double val) noexcept
+constexpr mat3& mat3::operator/=(float val) noexcept
 {
 	for (int i = 0; i < 3; ++i)
 	{
@@ -112,14 +112,14 @@ constexpr mat3 mat3::operator-(const mat3& rhs) noexcept
 	return m;
 }
 
-constexpr mat3 mat3::operator*(double val) noexcept
+constexpr mat3 mat3::operator*(float val) noexcept
 {
 	mat3 m(*this);
 	m *= val;
 	return m;
 }
 
-constexpr mat3 mat3::operator/(double val) noexcept
+constexpr mat3 mat3::operator/(float val) noexcept
 {
 	mat3 m(*this);
 	m /= val;
@@ -189,8 +189,8 @@ namespace matrix3
 	}
 	mat3 Rotate(double radian) noexcept
 	{
-		double cosVal = std::cos(radian);
-		double sinVal = std::sin(radian);
+		float cosVal = static_cast<float>(std::cos(radian));
+		float sinVal = static_cast<float>(std::sin(radian));
 		mat3 m(1.f);
 		m(0, 0) = cosVal;
 		m(1, 1) = cosVal;

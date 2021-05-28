@@ -18,7 +18,7 @@ void Mesh::Init() noexcept
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vec2), vertices.data(), GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_DOUBLE, GL_FALSE, 0, nullptr);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 	glBindVertexArray(0);
 }
@@ -30,8 +30,9 @@ void Mesh::Draw() noexcept
 	glBindVertexArray(vao);
 
 	//shader.SetUniformMat3("TRS", TRS);
-	shader.SetUniformColor("color", color);
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	shader.SetUniformVec3("color", color);
+	shader.SetUniformMat3("TRS", TRS);
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(vertices.size()));
 
 	glBindVertexArray(0);
 }
@@ -51,12 +52,12 @@ void Mesh::AddVertex(const vec2& v) noexcept
 
 void Mesh::SetColor(float r, float g, float b) noexcept
 {
-	color.r = r;
-	color.g = g;
-	color.b = b;
+	color.x = r;
+	color.y = g;
+	color.z = b;
 }
 
-void Mesh::SetColor(const Color& c) noexcept
+void Mesh::SetColor(const vec3& c) noexcept
 {
 	color = c;
 }
@@ -121,39 +122,41 @@ void Mesh::UpdateMatrix() noexcept
 
 namespace mesh
 {
-	Mesh CreateTriangle(const Color& color) noexcept
+	Mesh CreateTriangle(const vec3& color) noexcept
 	{
 		Mesh triangle;
-		triangle.AddVertex({ 0.0, 0.5 });
-		triangle.AddVertex({ -0.5, -0.5 });
-		triangle.AddVertex({ 0.5, -0.5 });
+		triangle.AddVertex({ 0.f, 0.5f });
+		triangle.AddVertex({ -0.5f, -0.5f });
+		triangle.AddVertex({ 0.5f, -0.5f });
 		triangle.SetColor(color);
 		triangle.SetMode(Mesh::Mode::TRIANGLES);
 		return triangle;
 	}
 
-	Mesh CreateCircle(const Color& color) noexcept
+	Mesh CreateCircle(const vec3& color) noexcept
 	{
 		Mesh circle;
-		circle.AddVertex({ 0.0, 0.0 });
+		circle.AddVertex({ 0.0f, 0.0f });
 		double angle_gap = 2.0 * PI / 32.0;
 		for (int i = 0; i <= 32; ++i)
 		{
-			circle.AddVertex(vec2{std::cos(angle_gap * i), std::sin(angle_gap * i)} * 0.5);
+			circle.AddVertex(
+				vec2{static_cast<float>(std::cos(angle_gap * i)), 
+				static_cast<float>(std::sin(angle_gap * i))} * 0.5f);
 		}
 		circle.SetColor(color);
 		circle.SetMode(Mesh::Mode::TRIANGLE_STRIP);
 		return circle;
 	}
-	Mesh CreateSquare(const Color& color) noexcept
+	Mesh CreateSquare(const vec3& color) noexcept
 	{
 		Mesh square;
-		square.AddVertex({-0.5, 0.5});
-		square.AddVertex({ 0.5, 0.5 });
-		square.AddVertex({ -0.5, -0.5 });
-		square.AddVertex({ 0.5, 0.5 });
-		square.AddVertex({ -0.5, -0.5 });
-		square.AddVertex({ 0.5, -0.5 });
+		square.AddVertex({-0.5f, 0.5f});
+		square.AddVertex({ 0.5f, 0.5f });
+		square.AddVertex({ -0.5f, -0.5f });
+		square.AddVertex({ 0.5f, 0.5f });
+		square.AddVertex({ -0.5f, -0.5f });
+		square.AddVertex({ 0.5f, -0.5f });
 		square.SetColor(color);
 		square.SetMode(Mesh::Mode::TRIANGLE_STRIP);
 		return square;

@@ -18,7 +18,7 @@ constexpr vec3& vec3::operator-=(const vec3& rhs) noexcept
 	return *this;
 }
 
-constexpr vec3& vec3::operator*=(double val) noexcept
+constexpr vec3& vec3::operator*=(float val) noexcept
 {
 	x *= val;
 	y *= val;
@@ -26,7 +26,7 @@ constexpr vec3& vec3::operator*=(double val) noexcept
 	return *this;
 }
 
-constexpr vec3& vec3::operator/=(double val) noexcept
+constexpr vec3& vec3::operator/=(float val) noexcept
 {
 	x /= val;
 	y /= val;
@@ -48,14 +48,14 @@ constexpr vec3 vec3::operator-(const vec3& rhs) noexcept
 	return v;
 }
 
-constexpr vec3 vec3::operator*(double val) noexcept
+constexpr vec3 vec3::operator*(float val) noexcept
 {
 	vec3 v(*this);
 	v *= val;
 	return v;
 }
 
-constexpr vec3 vec3::operator/(double val) noexcept
+constexpr vec3 vec3::operator/(float val) noexcept
 {
 	vec3 v(*this);
 	v /= val;
@@ -72,7 +72,7 @@ constexpr bool vec3::operator!=(const vec3& rhs) noexcept
 	return !(*this == rhs);
 }
 
-constexpr double vec3::GetLengthSquared() noexcept
+constexpr float vec3::GetLengthSquared() noexcept
 {
 	return x * x + y * y + z * z;
 }

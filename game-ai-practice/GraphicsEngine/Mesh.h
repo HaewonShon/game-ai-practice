@@ -5,12 +5,6 @@
 
 #include <gl/glew.h>
 
-struct Color
-{
-	Color(float c) : r(c), g(c), b(c) {}
-	float r, g, b;
-};
-
 class Mesh
 {
 public:
@@ -27,7 +21,7 @@ public:
 
 	void AddVertex(const vec2& v) noexcept;
 	void SetColor(float r, float g, float b) noexcept;
-	void SetColor(const Color& c) noexcept;
+	void SetColor(const vec3& c) noexcept;
 	void SetMode(Mesh::Mode m) noexcept;
 	
 	void SetTranslation(const vec2& v) noexcept;
@@ -42,7 +36,7 @@ private:
 	void UpdateMatrix() noexcept;
 
 	std::vector<vec2> vertices;
-	Color color{0.f};
+	vec3 color{0.f};
 	GLuint mode;
 
 	vec2 translation{0.0};
@@ -57,7 +51,7 @@ private:
 
 namespace mesh
 {
-	Mesh CreateTriangle(const Color& color) noexcept;
-	Mesh CreateCircle(const Color& color) noexcept;
-	Mesh CreateSquare(const Color& color) noexcept;
+	Mesh CreateTriangle(const vec3& color) noexcept;
+	Mesh CreateCircle(const vec3& color) noexcept;
+	Mesh CreateSquare(const vec3& color) noexcept;
 }

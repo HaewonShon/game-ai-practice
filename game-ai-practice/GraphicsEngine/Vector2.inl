@@ -17,14 +17,14 @@ constexpr vec2& vec2::operator-=(const vec2& rhs) noexcept
 	return *this;
 }
 
-constexpr vec2& vec2::operator*=(double val) noexcept
+constexpr vec2& vec2::operator*=(float val) noexcept
 {
 	x *= val;
 	y *= val;
 	return *this;
 }
 
-constexpr vec2& vec2::operator/=(double val) noexcept
+constexpr vec2& vec2::operator/=(float val) noexcept
 {
 	x /= val;
 	y /= val;
@@ -45,14 +45,14 @@ constexpr vec2 vec2::operator-(const vec2& rhs) noexcept
 	return v;
 }
 
-constexpr vec2 vec2::operator*(double val) noexcept
+constexpr vec2 vec2::operator*(float val) noexcept
 {
 	vec2 v(*this);
 	v *= val;
 	return v;
 }
 
-constexpr vec2 vec2::operator/(double val) noexcept
+constexpr vec2 vec2::operator/(float val) noexcept
 {
 	vec2 v(*this);
 	v /= val;
@@ -69,7 +69,7 @@ constexpr bool vec2::operator!=(const vec2& rhs) noexcept
 	return !(*this == rhs);
 }
 
-constexpr double vec2::GetLengthSquared() noexcept
+constexpr float vec2::GetLengthSquared() noexcept
 {
 	return x * x + y * y;
 }
@@ -81,8 +81,8 @@ vec2 vec2::GetNormalized() noexcept
 
 vec2 vec2::GetRotated(double radians) noexcept
 {
-	double cosVal{ std::cos(radians) };
-	double sinVal{ std::sin(radians) };
+	float cosVal{ static_cast<float>(std::cos(radians)) };
+	float sinVal{ static_cast<float>(std::sin(radians)) };
 
 	return vec2{ cosVal * x - sinVal * y, sinVal * x + cosVal * y };
 }

@@ -107,8 +107,8 @@ void Engine::Update()
 
 
     // NDC
-    mat3 NDC = matrix3::Scale({2. / windowWidth, 2. / windowHeight});
-    //shader.SetUniformMat3("NDC", NDC);
+    mat3 NDC = matrix3::Scale({2.f / windowWidth, 2.f / windowHeight});
+    shader.SetUniformMat3("NDC", NDC);
 
     currentScene->Update(0.0);
     currentScene->DrawObjects();

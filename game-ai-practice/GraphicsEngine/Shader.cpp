@@ -7,8 +7,8 @@ const char* vertexShader = {
 	"#version 450 core\n"
 	"layout(location = 0) in vec2 position;\n"
 
-	//"uniform mat3 TRS;\n"
-	//"uniform mat3 NDC;\n"
+	"uniform mat3 TRS;\n"
+	"uniform mat3 NDC;\n"
 	"uniform vec3 color;\n"
 
 	"out vec3 in_color;\n"
@@ -16,7 +16,7 @@ const char* vertexShader = {
 	"void main()\n"
 	"{\n"
 	"	in_color = color;\n"
-	"	vec3 pos = vec3(position, 1.0);\n"
+	"	vec3 pos = NDC * TRS * vec3(position, 1.0);\n"
 	"	gl_Position = vec4(pos.xy, 0.0, 1.0);\n"
 	//"	gl_Position = vec4(position, 0.0, 1.0);\n"
 	"}\n"
@@ -113,9 +113,9 @@ void Shader::Unbind() noexcept
 	glUseProgram(0);
 }
 
-void Shader::SetUniformDouble(const GLchar* variableName, double value) noexcept
+void Shader::SetUniformFloat(const GLchar* variableName, float value) noexcept
 {
-	glUniform1d(GetUniformLocation(variableName), value);
+	glUniform1f(GetUniformLocation(variableName), value);
 }
 
 void Shader::SetUniformInt(const GLchar* variableName, int value) noexcept
@@ -125,17 +125,12 @@ void Shader::SetUniformInt(const GLchar* variableName, int value) noexcept
 
 void Shader::SetUniformVec3(const GLchar* variableName, const vec3& value) noexcept
 {
-	glUniform3d(GetUniformLocation(variableName), value.x, value.y, value.z);
-}
-
-void Shader::SetUniformColor(const GLchar* variableName, const Color& value) noexcept
-{
-	glUniform3f(GetUniformLocation(variableName), value.r, value.g, value.b);
+	glUniform3f(GetUniformLocation(variableName), value.x, value.y, value.z);
 }
 
 void Shader::SetUniformMat3(const GLchar* variableName, const mat3& value) noexcept
 {
-	glUniformMatrix3dv(GetUniformLocation(variableName), 1, GL_FALSE,
+	glUniformMatrix3fv(GetUniformLocation(variableName), 1, GL_FALSE,
 		value.element[0]);
 		
 }
