@@ -59,30 +59,40 @@ constexpr vec2 vec2::operator/(float val) noexcept
 	return v;
 }
 
-constexpr bool vec2::operator==(const vec2& rhs) noexcept
+constexpr bool vec2::operator==(const vec2& rhs) const noexcept
 {
 	return (x == rhs.x && y == rhs.y);
 }
 
-constexpr bool vec2::operator!=(const vec2& rhs) noexcept
+constexpr bool vec2::operator!=(const vec2& rhs) const noexcept
 {
 	return !(*this == rhs);
 }
 
-constexpr float vec2::GetLengthSquared() noexcept
+constexpr float vec2::GetLengthSquared() const noexcept
 {
 	return x * x + y * y;
 }
 
-vec2 vec2::GetNormalized() noexcept
+vec2 vec2::GetNormalized() const noexcept
 {
 	return vec2(*this) / std::sqrt(GetLengthSquared());
 }
 
-vec2 vec2::GetRotated(double radians) noexcept
+vec2 vec2::GetRotated(double radians) const noexcept
 {
 	float cosVal{ static_cast<float>(std::cos(radians)) };
 	float sinVal{ static_cast<float>(std::sin(radians)) };
 
 	return vec2{ cosVal * x - sinVal * y, sinVal * x + cosVal * y };
+}
+
+float DotProduct(const vec2& v1, const vec2& v2)
+{
+	return v1.x * v2.x + v1.y * v2.y;
+}
+
+float GetAngle(const vec2& v1, const vec2& v2)
+{
+	return acos(DotProduct(v1.GetNormalized(), v2.GetNormalized()));
 }
