@@ -77,22 +77,12 @@ constexpr float vec3::GetLengthSquared() const noexcept
 	return x * x + y * y + z * z;
 }
 
+float vec3::GetLength() const noexcept
+{
+	return std::sqrt(GetLengthSquared());
+}
+
 vec3 vec3::GetNormalized() const noexcept
 {
-	return vec3(*this) / std::sqrt(GetLengthSquared());
-}
-
-float DotProduct(const vec3& v1, const vec3& v2)
-{
-	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-}
-
-float GetAngle(const vec3& v1, const vec3& v2)
-{
-	return acos(DotProduct(v1.GetNormalized(), v2.GetNormalized()));
-}
-
-vec3 CrossProduct(const vec3& v1, const vec3& v2)
-{
-
+	return vec3(*this) / GetLength();
 }

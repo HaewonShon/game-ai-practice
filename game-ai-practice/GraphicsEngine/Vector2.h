@@ -23,11 +23,9 @@ struct [[nodiscard]] vec2
 	inline [[nodiscard]] constexpr bool operator!=(const vec2& rhs) const noexcept;
 		 
 	inline [[nodiscard]] constexpr float GetLengthSquared() const noexcept;
+	inline float GetLength() const noexcept;
 	inline vec2 GetNormalized() const noexcept;
 	inline vec2 GetRotated(double radians) const noexcept;
 };
-
-float DotProduct(const vec2& v1, const vec2& v2);
-float GetAngle(const vec2& v1, const vec2& v2);
 
 #include "Vector2.inl"

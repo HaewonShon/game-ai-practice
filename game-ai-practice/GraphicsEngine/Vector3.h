@@ -26,11 +26,8 @@ struct [[nodiscard]] vec3
 	inline [[nodiscard]] constexpr bool operator!=(const vec3& rhs) const noexcept;
 	 
 	inline [[nodiscard]] constexpr float GetLengthSquared() const noexcept;
+	inline [[nodiscard]] float GetLength() const noexcept;
 	inline vec3 GetNormalized() const noexcept;
 };
-
-float DotProduct(const vec3& v1, const vec3& v2);
-float GetAngle(const vec3& v1, const vec3& v2);
-vec3 CrossProduct(const vec3& v1, const vec3& v2);
 
 #include "Vector3.inl"

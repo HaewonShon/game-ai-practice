@@ -74,9 +74,14 @@ constexpr float vec2::GetLengthSquared() const noexcept
 	return x * x + y * y;
 }
 
+float vec2::GetLength() const noexcept
+{
+	return std::sqrt(GetLengthSquared());
+}
+
 vec2 vec2::GetNormalized() const noexcept
 {
-	return vec2(*this) / std::sqrt(GetLengthSquared());
+	return vec2(*this) / GetLength();
 }
 
 vec2 vec2::GetRotated(double radians) const noexcept
@@ -85,14 +90,4 @@ vec2 vec2::GetRotated(double radians) const noexcept
 	float sinVal{ static_cast<float>(std::sin(radians)) };
 
 	return vec2{ cosVal * x - sinVal * y, sinVal * x + cosVal * y };
-}
-
-float DotProduct(const vec2& v1, const vec2& v2)
-{
-	return v1.x * v2.x + v1.y * v2.y;
-}
-
-float GetAngle(const vec2& v1, const vec2& v2)
-{
-	return acos(DotProduct(v1.GetNormalized(), v2.GetNormalized()));
 }

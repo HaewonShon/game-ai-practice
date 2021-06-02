@@ -4,22 +4,19 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{7c84d972-4eb0-4e84-8b5f-1d6ffe174bfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IScene">
-      <UniqueIdentifier>{43c251e7-7ef5-4a81-baca-61313fd8e333}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics">
       <UniqueIdentifier>{8f65bf68-ab2d-4de2-94d4-39719ba31e7b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{91447b32-f5be-4943-94ca-6be3b30b0f63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{8ab19ad5-080b-400b-975c-60afbad2ec82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="IScene.h">
-      <Filter>IScene</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Graphics</Filter>
@@ -48,6 +45,13 @@
     <ClInclude Include="constants.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="IScene.h" />
+    <ClInclude Include="Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -59,5 +63,13 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Math.inl">
+      <Filter>Math</Filter>
+    </None>
   </ItemGroup>
 </Project>

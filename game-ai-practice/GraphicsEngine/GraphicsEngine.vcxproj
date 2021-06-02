@@ -145,9 +145,13 @@
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Math.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="Matrix3.inl">
       <FileType>Document</FileType>
     </ClInclude>
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClInclude Include="Vector2.inl">
@@ -159,12 +163,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="IScene.h" />
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Math.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
