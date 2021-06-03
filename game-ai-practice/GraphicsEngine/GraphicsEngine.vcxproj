@@ -146,12 +146,14 @@
     <ClCompile Include="Engine.cpp" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Matrix3.inl">
       <FileType>Document</FileType>
     </ClInclude>
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClInclude Include="Vector2.inl">

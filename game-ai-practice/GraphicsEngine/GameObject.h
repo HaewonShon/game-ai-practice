@@ -13,19 +13,25 @@ public:
 	void Update(float dt);
 	void Draw();
 
+	const std::string& GetName() const noexcept;
+	bool IsDead() const noexcept;
+
 	void SetColor(float r, float g, float b) noexcept;
 	void SetColor(const vec3& c) noexcept;
 
 	void SetTranslation(const vec2& v) noexcept;
 	void SetScale(const vec2& v) noexcept;
 	void SetRotation(double radian) noexcept;
+	void SetVelocity(const vec2& v) noexcept;
 
 	void AddTranslation(const vec2& v) noexcept;
 	void AddRotation(double radian) noexcept;
+	void AddVelocity(const vec2& v) noexcept;
 
 	vec2 GetTranslation() const noexcept;
 	vec2 GetScale() const noexcept;
 	double GetRotation() const noexcept;
+	vec2 GetVelocity() const noexcept;
 
 	mat3& GetTRS() noexcept;
 
@@ -46,6 +52,8 @@ protected:
 	double rotation{ 0.f };
 
 	mat3 TRS{ 1.0 };
+
+	bool isDead{ false };
 
 private:
 	GameObject(const GameObject&) = delete;

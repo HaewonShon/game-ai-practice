@@ -32,6 +32,16 @@ void GameObject::Draw()
 	mesh.Draw();
 }
 
+const std::string& GameObject::GetName() const noexcept
+{
+	return name;
+}
+
+bool GameObject::IsDead() const noexcept
+{
+	return isDead;
+}
+
 void GameObject::SetColor(float r, float g, float b) noexcept
 {
 	color.x = r;
@@ -62,6 +72,11 @@ void GameObject::SetRotation(double radian) noexcept
 	UpdateMatrix();
 }
 
+void GameObject::SetVelocity(const vec2& v) noexcept
+{
+	velocity = v;
+}
+
 void GameObject::AddTranslation(const vec2& v) noexcept
 {
 	translation += v;
@@ -72,6 +87,11 @@ void GameObject::AddRotation(double radian) noexcept
 {
 	rotation += radian;
 	UpdateMatrix();
+}
+
+void GameObject::AddVelocity(const vec2& v) noexcept
+{
+	velocity += v;
 }
 
 vec2 GameObject::GetTranslation() const noexcept
@@ -87,6 +107,11 @@ vec2 GameObject::GetScale() const noexcept
 double GameObject::GetRotation() const noexcept
 {
 	return rotation;
+}
+
+vec2 GameObject::GetVelocity() const noexcept
+{
+	return velocity;
 }
 
 mat3& GameObject::GetTRS() noexcept
