@@ -10,8 +10,8 @@ public:
 	GameObject(std::string name);
 	GameObject(std::string name, vec2 position);
 
-	void Update(float dt);
-	void Draw();
+	virtual void Update(float dt);
+	virtual void Draw();
 
 	const std::string& GetName() const noexcept;
 	bool IsDead() const noexcept;

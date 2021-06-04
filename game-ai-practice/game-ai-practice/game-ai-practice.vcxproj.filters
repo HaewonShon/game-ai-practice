@@ -10,10 +10,16 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{3d47208d-d260-4c57-8d9f-18fd8964d269}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{2920b6fa-6961-403f-a652-273f5f8a0275}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
